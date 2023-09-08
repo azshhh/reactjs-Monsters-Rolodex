@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import { Component } from "react";
 import "./App.css";
 
@@ -7,44 +6,24 @@ class App extends Component {
     super();
 
     this.state = {
-      name: { firstName: "Redbull", lastName: "Racing" },
+      teams: [
+        { name: "Redbull", id: 1 },
+        { name: "Ferrari", id: 2 },
+        { name: "Mercedes", id: 3 },
+      ],
     };
   }
 
   render() {
-    const { firstName, lastName } = this.state.name;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hi {firstName} {lastName}
-          </p>
-          <button
-            onClick={() => {
-              // setState with Object
-              // this.setState({
-              //   name: { firstName: "Mercedes", lastName: "Racing" },
-              // });
-              // console.log(this.state);
-
-              // setState with callback as setState behaves asynchronously
-              this.setState(
-                () => {
-                  return {
-                    name: { firstName: "Mercedes", lastName: "Racing" },
-                  };
-                },
-                () => {
-                  console.log(this.state);
-                }
-              );
-
-            }}
-          >
-            Change Name
-          </button>
-        </header>
+        {this.state.teams.map((team) => {
+          return (
+            <div key={team.id}>
+              <h1>{team.name}</h1>
+            </div>
+          );
+        })}
       </div>
     );
   }
