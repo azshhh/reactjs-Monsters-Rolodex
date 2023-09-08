@@ -7,19 +7,20 @@ class App extends Component {
     super();
 
     this.state = {
-      name: "Redbull",
+      name: { firstName: 'Redbull', lastName: 'Racing' },
     };
   }
 
   render() {
+    const { firstName, lastName } = this.state.name;
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>Hi {this.state.name}</p>
+          <p>Hi {firstName} {lastName}</p>
           <button
             onClick={() => {
-              this.setState({ name: 'Mercedes' });
+              this.setState({ name: { firstName: 'Mercedes', lastName: 'Racing' } });
               console.log(this.state);
             }}
           >
