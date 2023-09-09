@@ -4,23 +4,28 @@ import "./App.css";
 class App extends Component {
   constructor() {
     super();
-
     this.state = {
-      teams: [
-        { name: "Redbull", id: 1 },
-        { name: "Ferrari", id: 2 },
-        { name: "Mercedes", id: 3 },
-      ],
+      monsters: [],
     };
+  }
+
+  async componentDidMount() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    const users = await response.json();
+    this.setState(() => {
+      return { monsters: users };
+    }, () => {
+      console.log(this.state);
+    });
   }
 
   render() {
     return (
       <div className="App">
-        {this.state.teams.map((team) => {
+        {this.state.monsters.map((monster) => {
           return (
-            <div key={team.id}>
-              <h1>{team.name}</h1>
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
             </div>
           );
         })}
