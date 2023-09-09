@@ -8,11 +8,9 @@ class App extends Component {
       monsters: [],
       searchField: "",
     };
-    console.log("state");
   }
 
   async componentDidMount() {
-    console.log("fetching...");
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
     const users = await response.json();
     this.setState(() => {
@@ -20,10 +18,20 @@ class App extends Component {
     });
   }
 
+  // Optimizing onChange field
+  onSearchChange = (event) => {
+    const { value } = event.target;
+    const searchField = value.toLocaleLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   render() {
-    console.log("rendering");
-    const filteredMonsters = this.state.monsters.filter((monster) => {
-      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField);
     });
     return (
       <div className="App">
@@ -31,17 +39,10 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={(event) => {
-            console.log(event.target.value);
-            const searchField = event.target.value.toLocaleLowerCase();
-            this.setState(() => {
-              return { searchField };
-            });
-          }}
+          onChange={onSearchChange}
         />
 
         {filteredMonsters.map((monster) => {
-          console.log('mapping...');
           return (
             <div key={monster.id}>
               <h1>{monster.name}</h1>
